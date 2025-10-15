@@ -88,8 +88,6 @@
 
 # save the PCA
 
-# retrieve the first two PC's % variance
-
 # customize the PCA
 
 # store the PCA plot

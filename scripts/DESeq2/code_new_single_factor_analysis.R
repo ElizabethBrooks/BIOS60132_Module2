@@ -25,7 +25,6 @@ setwd("/Users/bamflappy/ND_teaching/BIOS60132_ComputationalGenomics_FA25/Module_
 #install.packages("pheatmap")
 #install.packages("RColorBrewer")
 #install.packages("ghibli")
-#install.packages("ggVennDiagram")
 #if (!require("BiocManager", quietly = TRUE))
 #  install.packages("BiocManager")
 #BiocManager::install("DESeq2")
@@ -37,7 +36,6 @@ library(ggplotify)
 library(pheatmap)
 library(RColorBrewer)
 library(ghibli)
-library(ggVennDiagram)
 library(DESeq2)
 
 
@@ -124,12 +122,6 @@ dev.off()
 # retrieve the vector of colors associated with PonyoMedium
 ponyo_colors <- ghibli_palette("PonyoMedium", type = "discrete")
 
-# retrieve the vector of colors associated with YesterdayMedium
-yest_colors <- ghibli_palette("YesterdayMedium", type = "discrete")
-
-# retrieve the vector of colors associated with KikiMedium
-kiki_colors <- ghibli_palette("KikiMedium", type = "discrete")
-
 
 ##
 # Data Exploration
@@ -145,24 +137,21 @@ vsd <- vst(dds, blind=FALSE)
 plotPCA(vsd, intgroup=c("condition"))
 
 # save the PCA
-pcaData <- plotPCA(vsd, intgroup=c("condition"), returnData=TRUE)
-
-# retrieve the first two PC's % variance
-percentVar <- round(100 * attr(pcaData, "percentVar"))
+pcaData <- plotPCA(vsd, intgroup=c("condition"), returnData=FALSE)
 
 # customize the PCA
-ggplot(pcaData, aes(PC1, PC2, color=condition)) +
+ggplot(pcaData@data, aes(PC1, PC2, color=condition)) +
   geom_point(size=3) +
-  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  xlab(pcaData@labels$x) +
+  ylab(pcaData@labels$y) + 
   coord_fixed() + 
   scale_colour_manual(values = c(ponyo_colors[4], ponyo_colors[3]))
 
 # store the PCA plot
-sample_pca <- ggplot(pcaData, aes(PC1, PC2, color=condition)) +
+sample_pca <- ggplot(pcaData@data, aes(PC1, PC2, color=condition)) +
   geom_point(size=3) +
-  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  xlab(pcaData@labels$x) +
+  ylab(pcaData@labels$y) + 
   coord_fixed() + 
   scale_colour_manual(values = c(ponyo_colors[4], ponyo_colors[3]))
 
