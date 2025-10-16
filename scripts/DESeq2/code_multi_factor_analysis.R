@@ -14,7 +14,6 @@
 # set the working directory
 setwd("/Users/bamflappy/ND_teaching/BIOS60132_ComputationalGenomics_FA25/Module_2/Session16/multi_factor")
 
-
 ##
 # Packages
 ##
@@ -25,7 +24,6 @@ setwd("/Users/bamflappy/ND_teaching/BIOS60132_ComputationalGenomics_FA25/Module_
 #install.packages("pheatmap")
 #install.packages("RColorBrewer")
 #install.packages("ghibli")
-#install.packages("ggVennDiagram")
 #if (!require("BiocManager", quietly = TRUE))
 #  install.packages("BiocManager")
 #BiocManager::install("DESeq2")
@@ -37,7 +35,6 @@ library(ggplotify)
 library(pheatmap)
 library(RColorBrewer)
 library(ghibli)
-library(ggVennDiagram)
 library(DESeq2)
 
 
@@ -134,24 +131,21 @@ vsd <- vst(dds, blind=FALSE)
 plotPCA(vsd, intgroup=c("condition", "time"))
 
 # save the PCA
-pcaData <- plotPCA(vsd, intgroup=c("condition", "time"), returnData=TRUE)
-
-# retrieve the first two PC's % variance
-percentVar <- round(100 * attr(pcaData, "percentVar"))
+pcaData <- plotPCA(vsd, intgroup=c("condition", "time"), returnData=FALSE)
 
 # customize the PCA
-ggplot(pcaData, aes(PC1, PC2, color=condition, shape=time)) +
+ggplot(pcaData@data, aes(PC1, PC2, color=condition, shape=time)) +
   geom_point(size=3) +
-  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  xlab(pcaData@labels$x) +
+  ylab(pcaData@labels$y) + 
   coord_fixed() + 
   scale_colour_manual(values = c(ponyo_colors[4], ponyo_colors[3], ponyo_colors[2], ponyo_colors[1]))
 
 # store the PCA plot
-sample_pca <- ggplot(pcaData, aes(PC1, PC2, color=condition, shape=time)) +
+sample_pca <- ggplot(pcaData@data, aes(PC1, PC2, color=condition, shape=time)) +
   geom_point(size=3) +
-  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  xlab(pcaData@labels$x) +
+  ylab(pcaData@labels$y) + 
   coord_fixed() + 
   scale_colour_manual(values = c(ponyo_colors[4], ponyo_colors[3], ponyo_colors[2], ponyo_colors[1]))
 
@@ -249,7 +243,7 @@ pheatmap(assay(vsd)[select,],
          cluster_cols=FALSE, 
          annotation_col=colData,
          annotation_colors = anno_colors,
-         color = colorRampPalette(c(ponyo_colors[2], "white", ponyo_colors[5]))(100))
+         color = colorRampPalette(c(kiki_colors[4], "white", kiki_colors[3]))(100))
 
 # store the clustering plot as a ggplot object
 vst_clust <- as.ggplot(pheatmap(assay(vsd)[select,], 
