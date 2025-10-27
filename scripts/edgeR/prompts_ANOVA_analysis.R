@@ -10,7 +10,6 @@
 # set the working directory
 
 
-
 ##
 # Packages
 ##
@@ -21,13 +20,11 @@
 # import libraries
 
 
-
 ##
 # Data
 ##
 
 # import gene count data
-
 
 
 ##
@@ -52,7 +49,6 @@
 # add group names
 
 
-
 ##
 # GLM Normalization
 ##
@@ -72,7 +68,6 @@
 # compute counts per million (CPM) using normalized library sizes
 
 
-
 ##
 # GLM Fitting
 ##
@@ -84,7 +79,6 @@
 
 
 # plot the QL dispersions
-
 
 
 ##
@@ -109,16 +103,15 @@
 # vector with a subset of colors associated with PonyoMedium
 
 
-
 ##
 # GLM Contrasts
 ##
 
 ###
-## treatment
+## condition
 ###
 
-# examine the overall effect of treatment
+# examine the overall effect of condition
 
 
 # conduct gene wise statistical tests
@@ -154,12 +147,11 @@
 # create filtered results table of DE genes
 
 
-
 ###
-## hours
+## time
 ###
 
-# examine the overall effect of hours
+# examine the overall effect of time
 
 
 # conduct gene wise statistical tests
@@ -193,7 +185,6 @@
 
 
 # create filtered results table of DE genes
-
 
 
 ###
@@ -236,12 +227,11 @@
 # create filtered results table of DE genes
 
 
-
 ##
 # GLM Results Exploration
 ##
 
-# retrieve set of DE gene names for hours contrast
+# retrieve set of DE gene names for time contrast
 
 
 # retrieve set of DE gene names for interaction contrast

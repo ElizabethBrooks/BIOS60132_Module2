@@ -10,7 +10,6 @@
 # set the working directory
 
 
-
 ##
 # Packages
 ##
@@ -21,13 +20,11 @@
 # import libraries
 
 
-
 ##
 # Data
 ##
 
 # import gene count data
-
 
 
 ##
@@ -38,7 +35,6 @@
 
 
 # create DGE list object
-
 
 
 ##
@@ -63,7 +59,6 @@
 # compute counts per million (CPM) using normalized library sizes
 
 
-
 ##
 # Plotting Palettes
 ##
@@ -84,7 +79,6 @@
 
 
 # vector with a subset of colors associated with PonyoMedium
-
 
 
 ##
@@ -115,7 +109,6 @@
 # draw a heatmap of individual RNA-seq samples using moderated log CPM
 
 
-
 ##
 # Pairwise Fitting
 ##
@@ -126,16 +119,15 @@
 # plot dispersion estimates and biological coefficient of variation
 
 
-
 ##
 # Pairwise Contrasts
 ##
 
 ###
-## treat_4h vs treat_24h
+## condition_4h vs condition_24h
 ###
 
-# perform an exact test for treat_4h vs treat_24h
+# perform an exact test for condition_4h vs condition_24h
 
 
 # view the total number of differentially expressed genes at a p-value of 0.05
@@ -166,7 +158,6 @@
 
 
 # create filtered results table of DE genes
-
 
 
 ###
@@ -207,10 +198,10 @@
 
 
 ### 
-## treat_4h vs cntrl_4h
+## condition_4h vs cntrl_4h
 ###
 
-# perform an exact test for treat_4h vs cntrl_4h
+# perform an exact test for condition_4h vs cntrl_4h
 
 
 # view the total number of differentially expressed genes at a p-value of 0.05
@@ -237,12 +228,11 @@
 # create volcano plot
 
 
-
 ###
-## treat_24h vs cntrl_24h
+## condition_24h vs cntrl_24h
 ###
 
-# perform an exact test for treat_24h vs cntrl_24h
+# perform an exact test for condition_24h vs cntrl_24h
 
 
 # view the total number of differentially expressed genes at a p-value of 0.05
@@ -275,7 +265,6 @@
 # create filtered results table of DE genes
 
 
-
 ##
 # Pairwise Results Exploration
 ##
@@ -283,7 +272,7 @@
 # retrieve set of DE gene names for 24h contrast
 
 
-# retrieve set of DE gene names for treat contrast
+# retrieve set of DE gene names for condition contrast
 
 
 # retrieve set of DE gene names for cntrl contrast
