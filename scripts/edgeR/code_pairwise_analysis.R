@@ -40,7 +40,7 @@ tribolium_counts <- read.csv("/Users/bamflappy/Repos/BIOS60132_Module2/data/trib
 ##
 
 # add grouping factor
-group <- factor(c(rep("cntrl_4h",3), rep("condition_4h",3), rep("cntrl_24h",3), rep("condition_24h",3)))
+group <- factor(c(rep("cntrl_4h",3), rep("treat_4h",3), rep("cntrl_24h",3), rep("treat_24h",3)))
 
 # begin to construct the DGE list object
 list <- DGEList(counts=tribolium_counts,group=group)
@@ -58,7 +58,7 @@ keep <- filterByExpr(list)
 # view the number of filtered genes
 table(keep)
 
-# remove genes that are not expressed in either experimental condition
+# remove genes that are not expressed in either experimental treat
 list <- list[keep, , keep.lib.sizes=FALSE]
 
 # calculate scaling factors
@@ -129,44 +129,44 @@ plotBCV(list)
 ##
 
 ###
-## condition_4h vs condition_24h
+## treat_4h vs treat_24h
 ###
 
-# perform an exact test for condition_4h vs condition_24h
-tested_condition <- exactTest(list, pair=c("condition_24h", "condition_4h"))
+# perform an exact test for treat_4h vs treat_24h
+tested_treat <- exactTest(list, pair=c("treat_24h", "treat_4h"))
 
 # view the total number of differentially expressed genes at a p-value of 0.05
-summary(decideTests(tested_condition))
+summary(decideTests(tested_treat))
 
 # plot log-fold change against log-counts per million with DE genes highlighted
-plotMD(tested_condition)
+plotMD(tested_treat)
 
 # add blue lines to indicate 2-fold changes
 abline(h=c(-1, 1), col="blue")
 
 # create a results table of DE genes
-resultsTbl_condition <- topTags(tested_condition, n=nrow(tested_condition$table), adjust.method="fdr")$table
+resultsTbl_treat <- topTags(tested_treat, n=nrow(tested_treat$table), adjust.method="fdr")$table
 
 # add column for identifying direction of DE gene expression
-resultsTbl_condition$topDE <- "NA"
+resultsTbl_treat$topDE <- "NA"
 
 # identify significantly up DE genes
-resultsTbl_condition$topDE[resultsTbl_condition$logFC > 1 & resultsTbl_condition$FDR < 0.05] <- "Up"
+resultsTbl_treat$topDE[resultsTbl_treat$logFC > 1 & resultsTbl_treat$FDR < 0.05] <- "Up"
 
 # identify significantly down DE genes
-resultsTbl_condition$topDE[resultsTbl_condition$logFC < -1 & resultsTbl_condition$FDR < 0.05] <- "Down"
+resultsTbl_treat$topDE[resultsTbl_treat$logFC < -1 & resultsTbl_treat$FDR < 0.05] <- "Down"
 
 # create volcano plot
-ggplot(data=resultsTbl_condition, aes(x=logFC, y=-log10(FDR), color = topDE)) + 
+ggplot(data=resultsTbl_treat, aes(x=logFC, y=-log10(FDR), color = topDE)) + 
   geom_point() +
   theme_minimal() +
   scale_colour_discrete(type = ghibli_subset, breaks = c("Up", "Down"))
 
 # identify significantly DE genes by FDR
-resultsTbl_condition.keep <- resultsTbl_condition$FDR < 0.05
+resultsTbl_treat.keep <- resultsTbl_treat$FDR < 0.05
 
 # create filtered results table of DE genes
-resultsTbl_condition_filtered <- resultsTbl_condition[resultsTbl_condition.keep,]
+resultsTbl_treat_filtered <- resultsTbl_treat[resultsTbl_treat.keep,]
 
 ###
 ## cntrl_4h vs cntrl_24h
@@ -209,11 +209,11 @@ resultsTbl_cntrl.keep <- resultsTbl_ncntrl$FDR < 0.05
 resultsTbl_cntrl_filtered <- resultsTbl_ncntrl[resultsTbl_cntrl.keep,]
 
 ### 
-## condition_4h vs cntrl_4h
+## treat_4h vs cntrl_4h
 ###
 
-# perform an exact test for condition_4h vs cntrl_4h
-tested_4h <- exactTest(list, pair=c("cntrl_4h", "condition_4h"))
+# perform an exact test for treat_4h vs cntrl_4h
+tested_4h <- exactTest(list, pair=c("cntrl_4h", "treat_4h"))
 
 # view the total number of differentially expressed genes at a p-value of 0.05
 summary(decideTests(tested_4h))
@@ -243,11 +243,11 @@ ggplot(data=resultsTbl_4h, aes(x=logFC, y=-log10(FDR), color = topDE)) +
   scale_colour_discrete(type = ghibli_subset, breaks = c("Up", "Down"))
 
 ###
-## condition_24h vs cntrl_24h
+## treat_24h vs cntrl_24h
 ###
 
-# perform an exact test for condition_24h vs cntrl_24h
-tested_24h <- exactTest(list, pair=c("cntrl_24h", "condition_24h"))
+# perform an exact test for treat_24h vs cntrl_24h
+tested_24h <- exactTest(list, pair=c("cntrl_24h", "treat_24h"))
 
 # view the total number of differentially expressed genes at a p-value of 0.05
 summary(decideTests(tested_24h))
@@ -289,17 +289,17 @@ resultsTbl_24h_filtered <- resultsTbl_24h[resultsTbl_24h.keep,]
 # retrieve set of DE gene names for 24h contrast
 geneSet_24h <- rownames(resultsTbl_24h_filtered)
 
-# retrieve set of DE gene names for condition contrast
-geneSet_condition <- rownames(resultsTbl_condition_filtered)
+# retrieve set of DE gene names for treat contrast
+geneSet_treat <- rownames(resultsTbl_treat_filtered)
 
 # retrieve set of DE gene names for cntrl contrast
 geneSet_cntrl <- rownames(resultsTbl_cntrl_filtered)
 
 # create combined list of DE gene names
 list_venn <- list(h24 = geneSet_24h, 
-                  condition = geneSet_condition, 
+                  treat = geneSet_treat, 
                   cntrl = geneSet_cntrl)
 
 # create venn diagram
-ggVennDiagram(list_venn, label_alpha=0.25, category.names = c("24h","condition","cntrl")) +
+ggVennDiagram(list_venn, label_alpha=0.25, category.names = c("24h","treat","cntrl")) +
   scale_color_brewer(palette = "Paired")
