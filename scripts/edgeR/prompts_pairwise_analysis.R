@@ -1,5 +1,8 @@
 #!/usr/bin/env Rscript
 
+# edgeR user guide
+# https://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf
+
 ##
 # Working Directory
 ##
