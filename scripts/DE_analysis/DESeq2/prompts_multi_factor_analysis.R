@@ -29,6 +29,8 @@
 
 # import gene count data
 
+# trim the data table to remove lines with counting statistics (htseq)
+
 # check out the number of imported genes
 
 # import grouping factors

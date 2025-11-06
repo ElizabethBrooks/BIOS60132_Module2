@@ -45,6 +45,10 @@ library(DESeq2)
 # import gene count data
 gene_counts <- as.matrix(read.csv("/Users/bamflappy/Repos/BIOS60132_Module2/data/tribolium_fullset_counts.csv", row.names="X"))
 
+# trim the data table to remove lines with counting statistics (htseq)
+removeList <- c("__no_feature", "__ambiguous", "__too_low_aQual", "__not_aligned", "__alignment_not_unique")
+gene_counts <- gene_counts[!row.names(gene_counts) %in% removeList,]
+
 # check out the number of imported genes
 nrow(gene_counts)
 
