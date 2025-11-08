@@ -233,14 +233,14 @@ write.csv(as.data.frame(resOrdered), file="treat_cntrl_results.csv")
 # check the number of adjusted p-values were less than 0.05
 sum(res$padj < 0.05, na.rm=TRUE)
 
-# set the adjusted p-value cut off to 0.05
-res05 <- results(dds, alpha=0.05)
+# set the adjusted p-value cut off to 0.05 and LFC to 1.2
+res05 <- results(dds, alpha=0.05, lfcThreshold=1.2)
 
 # summarize the results
 summary(res05)
 
 # save the filtered results to a csv file
-write.csv(as.data.frame(res05), file="treat_cntrl_results_0.5.csv")
+write.csv(as.data.frame(res05), file="treat_cntrl_results_padj0.05_lfc1.2.csv")
 
 
 ##

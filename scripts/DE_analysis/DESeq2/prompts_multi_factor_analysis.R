@@ -133,9 +133,9 @@
 
 # save the ordered results to a csv file
 
-# check the number of adjusted p-values were less than 0.5
+# check the number of adjusted p-values were less than 0.05
 
-# set the adjusted p-value cut off to 0.5
+# set the adjusted p-value cut off to 0.05 and LFC to 1.2
 
 # summarize the results
 
