@@ -2,8 +2,8 @@
 
 # R script to quantify transcriptomic data for the red flour beetle
 
-# set the working directory
-setwd("/YOUR/DIRECTORY/PATH")
+# set the working directory to the location with the data
+#setwd("/PATH/TO/DATA")
 
 # install the BiocManager followed by the Rsubread package, if necessary
 if (!require("BiocManager", quietly = TRUE))
