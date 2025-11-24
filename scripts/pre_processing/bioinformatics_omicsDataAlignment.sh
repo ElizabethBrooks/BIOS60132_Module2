@@ -12,6 +12,7 @@ gffread -E -F -T Tribolium_castaneum.gff3 -o Tribolium.gtf
 hisat2-build Tribolium_castaneum.genome.fa TriboliumBuild
 
 # align trimmed samples to the refence genome
+# use --threads argument to improve run time, if multi-threading is available on your machine
 # cntrl samples 4h
 hisat2 -q -x TriboliumBuild -U SRR8288561.trimmed.fq.gz -S SRR8288561_accepted_hits.sam --summary-file SRR8288561_alignedSummary.txt
 hisat2 -q -x TriboliumBuild -U SRR8288562.trimmed.fq.gz -S SRR8288562_accepted_hits.sam --summary-file SRR8288562_alignedSummary.txt
