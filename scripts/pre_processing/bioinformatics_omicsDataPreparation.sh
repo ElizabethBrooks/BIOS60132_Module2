@@ -26,7 +26,7 @@ for sampleFile in *".trimmed.fq.gz"; do
 	fileName=$(echo $sampleFile | sed "s/\.fastq\.gz//g")
 	# trim a sample based on QC reports 
 	# use -threads argument to improve run time, if multi-threading is available on your machine
-	trimmomatic SE -phred"$score" $sampleFile $fileName.trimmed.fq.gz ILLUMINACLIP:"$adapterPath":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 HEADCROP:10
+	trimmomatic SE -phred"$score" $sampleFile $fileName.trimmed.fq.gz ILLUMINACLIP:"$adapterPath":2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 HEADCROP:10 MINLEN:35
 done
 
 # qc the trimmed samples
